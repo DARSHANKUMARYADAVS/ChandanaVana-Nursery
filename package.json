@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/blob": "^0.27.2",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",
     "next": "15.2.0",
