@@ -58,7 +58,7 @@ export default function AdminDashboard() {
 
             if (!uploadRes.ok) throw new Error("Image upload failed");
 
-            const imageUrl = `/img/${fileName}`;
+            const imageUrl = `/tmp/${fileName}`;
             const productData = { ...newProduct, image: imageUrl };
 
             const res = await fetch("/api/products", {
@@ -85,7 +85,7 @@ export default function AdminDashboard() {
             console.log("Original image path:", imagePath);
 
             // Ensure correct image path format
-            const formattedPath = imagePath.startsWith("/img/") ? imagePath.replace("/img/", "") : imagePath;
+            const formattedPath = imagePath.startsWith("/tmp/") ? imagePath.replace("/tmp/", "") : imagePath;
             console.log("Formatted path for deletion:", formattedPath);
 
             // Delete product from API
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
                 <h3>Existing Products</h3>
                 <div className="product-list">
                     {products.map((product) => {
-                        const imagePath = `/img/${product.name}-${product.price}.jpg`;
+                        const imagePath = `/tmp/${product.name}-${product.price}.jpg`;
 
                         return (
                             <div key={`${product.name}-${product.price}`} className="product-card">
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
                                 <p>{product.name} - ₹{product.price}</p>
                                 <button
                                     className="delete-btn"
-                                    onClick={() => handleDeleteProduct(product.id, `img/${product.name}-${product.price}.jpg`)}
+                                    onClick={() => handleDeleteProduct(product.id, `tmp/${product.name}-${product.price}.jpg`)}
                                 >
                                     ❌ Delete
                                 </button>

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const uploadDir = path.join(process.cwd(), "public/img");
+        const uploadDir = path.join(process.cwd(), "public/tmp");
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
                     return res.status(500).json({ error: "File rename failed", details: renameErr.message });
                 }
 
-                res.status(200).json({ imageUrl: `/img/${file.originalFilename}` });
+                res.status(200).json({ imageUrl: `/tmp/${file.originalFilename}` });
             });
         });
     } catch (error) {
