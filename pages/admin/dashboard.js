@@ -39,16 +39,14 @@ export default function AdminDashboard() {
         // Cleanup previous image URL to prevent memory leak
         return () => URL.revokeObjectURL(objectUrl);
     };
-
     const handleAddProduct = async () => {
         if (!newProduct.name || !newProduct.price || !imageFile) {
             alert("Please fill in all fields and select an image.");
             return;
         }
 
-        const fileName = `${newProduct.name}-${newProduct.price}.jpg`;
         const formData = new FormData();
-        formData.append("file", imageFile, fileName);
+        formData.append("file", imageFile); // ✅ Ensure key is "file"
 
         try {
             const uploadRes = await fetch("/api/upload", {
@@ -58,8 +56,10 @@ export default function AdminDashboard() {
 
             if (!uploadRes.ok) throw new Error("Image upload failed");
 
-            const imageUrl = `/tmp/${fileName}`;
-            const productData = { ...newProduct, image: imageUrl };
+            const uploadData = await uploadRes.json();
+            console.log("Image uploaded successfully:", uploadData);
+
+            const productData = { ...newProduct, image: uploadData.imageUrl };
 
             const res = await fetch("/api/products", {
                 method: "POST",
@@ -68,16 +68,15 @@ export default function AdminDashboard() {
             });
 
             if (!res.ok) throw new Error("Failed to add product");
-            // ✅ Fetch latest products after adding
+
             fetchProducts();
-            const addedProduct = await res.json();
-            setProducts((prev) => [...prev, addedProduct]);
             setNewProduct({ name: "", price: "", image: "" });
             setImageFile(null);
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
 
     const handleDeleteProduct = async (id, imagePath) => {
         try {
