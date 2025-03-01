@@ -139,7 +139,7 @@ export default function AdminDashboard() {
                                     alt={product.name}
                                     className="product-img"
                                 />
-                                <p>{product.name} - ${product.price}</p>
+                                <p>{product.name} - ₹{product.price}</p>
                                 <button
                                     className="delete-btn"
                                     onClick={() => handleDeleteProduct(product.id, `img/${product.name}-${product.price}.jpg`)}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Cart from "./Cart"; // Ensure the import is correct
 
 export default function App() {
     const [cart, setCart] = useState([]);

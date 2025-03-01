@@ -29,9 +29,10 @@ export default function Footer() {
                 <div className="shop-details">
                     <h3>🌿 ChandanaVana Nursery</h3>
                     <p>Bringing Nature Closer to You!</p>
-                    <p><strong>Location:</strong> 123 Green Avenue, Bangalore, India</p>
-                    <p><strong>Phone:</strong> +91 98765 43210</p>
+                    <p><strong>Location:</strong> Gunnur Village, Kailancha Ho, Ramnagar Taluk</p>
+                    <p><strong>Phone:</strong> +91 9845040818</p>
                     <p><strong>Email:</strong> contact@chandanavana.com</p>
+                    <a href="https://maps.app.goo.gl/C4tyEqkb8rZg4VpR6?g_st=aw" target="_blank" style={{ color: "blue" }}>Shop here 📍</a>
                 </div>
 
                 <div className="contact-section">
@@ -42,9 +43,29 @@ export default function Footer() {
                 </div>
             </div>
 
+            <hr className="footer-divider" />
+
+            <div className="about-us">
+                <h3>About Us</h3>
+                <p>
+                    Welcome to ChandanaVana Nursery, where nature thrives and beauty blossoms. We specialize in offering a wide selection of high-quality plants, ranging from vibrant flowers to lush shrubs and fruit trees. Our expert team is dedicated to helping you create beautiful, sustainable landscapes that will flourish for years to come.
+                </p>
+            </div>
+
+            <div className="services">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><strong>Plant Sales:</strong> Wide variety of flowers, shrubs, trees, succulents, herbs, and vegetables.</li>
+                    <li><strong>Landscaping Services:</strong> Designing outdoor spaces, planting, and maintenance.</li>
+                    <li><strong>Tree Care:</strong> Pruning, trimming, and health checks for trees and shrubs.</li>
+                    <li><strong>Soil & Fertilization:</strong> Soil testing, compost, and fertilization solutions.</li>
+                    <li><strong>Pest Control:</strong> Eco-friendly pest and disease management for plants.</li>
+                    <li><strong>Delivery Services:</strong> Home delivery of plants and garden supplies.</li>
+                </ul>
+            </div>
+
             <p className="footer-text">© 2025 Plant Shop. All rights reserved.</p>
 
-            {/* Contact Modal */}
             {isContactOpen && (
                 <div className="contact-modal-overlay">
                     <div className="contact-modal">
@@ -65,100 +86,50 @@ export default function Footer() {
                 </div>
             )}
 
-            {/* Styles */}
             <style jsx>{`
                 .footer {
-                    background: #222;
-                    color: white;
-                    padding: 20px;
+                    background: #1a1a1a;
+                    color: #ccc;
+                    padding: 40px 20px;
                     text-align: center;
-                    margin-top: 20px;
                 }
                 .footer-content {
                     display: flex;
                     justify-content: space-between;
-                    align-items: center;
-                    max-width: 900px;
+                    flex-wrap: wrap;
+                    max-width: 1000px;
                     margin: 0 auto;
-                    padding-bottom: 10px;
-                }
-                .shop-details {
                     text-align: left;
                 }
-                .contact-section {
-                    text-align: right;
-                }
                 .contact-button {
-                    background: #007bff;
+                    background: linear-gradient(135deg, #4caf50, #2e7d32);
                     color: white;
-                    padding: 10px 15px;
+                    padding: 12px 18px;
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
+                    transition: background 0.3s;
                 }
                 .contact-button:hover {
-                    background: #0056b3;
+                    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+                }
+                .footer-divider {
+                    border: 0;
+                    height: 1px;
+                    background: #444;
+                    margin: 20px 0;
+                }
+                .services ul {
+                    list-style: none;
+                    padding: 0;
+                }
+                .services li {
+                    margin: 8px 0;
                 }
                 .footer-text {
-                    margin-top: 10px;
+                    margin-top: 15px;
                     font-size: 14px;
-                }
-                .contact-modal-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.5);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    z-index: 1000;
-                }
-                .contact-modal {
-                    width: 400px;
-                    background: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    text-align: center;
-                    position: relative;
-                }
-                .close-modal {
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: none;
-                    border: none;
-                    font-size: 20px;
-                    cursor: pointer;
-                }
-                .contact-modal input, .contact-modal textarea {
-                    width: 100%;
-                    padding: 10px;
-                    margin: 10px 0;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    font-size: 14px;
-                }
-                .send-message {
-                    background: #28a745;
-                    color: white;
-                    padding: 12px;
-                    border: none;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    width: 100%;
-                    margin-top: 10px;
-                    font-size: 16px;
-                }
-                .send-message:hover {
-                    background: #218838;
-                }
-                .success-message {
-                    font-size: 18px;
-                    color: green;
-                    font-weight: bold;
-                    margin-bottom: 10px;
+                    opacity: 0.8;
                 }
             `}</style>
         </footer>
