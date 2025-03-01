@@ -39,14 +39,16 @@ export default function AdminDashboard() {
         // Cleanup previous image URL to prevent memory leak
         return () => URL.revokeObjectURL(objectUrl);
     };
+
     const handleAddProduct = async () => {
         if (!newProduct.name || !newProduct.price || !imageFile) {
             alert("Please fill in all fields and select an image.");
             return;
         }
 
+        const fileName = `${newProduct.name}-${newProduct.price}.jpg`;
         const formData = new FormData();
-        formData.append("file", imageFile); // ✅ Ensure key is "file"
+        formData.append("file", imageFile, fileName);
 
         try {
             const uploadRes = await fetch("/api/upload", {
@@ -56,10 +58,8 @@ export default function AdminDashboard() {
 
             if (!uploadRes.ok) throw new Error("Image upload failed");
 
-            const uploadData = await uploadRes.json();
-            console.log("Image uploaded successfully:", uploadData);
-
-            const productData = { ...newProduct, image: uploadData.imageUrl };
+            const imageUrl = `/img/${fileName}`;
+            const productData = { ...newProduct, image: imageUrl };
 
             const res = await fetch("/api/products", {
                 method: "POST",
@@ -68,8 +68,10 @@ export default function AdminDashboard() {
             });
 
             if (!res.ok) throw new Error("Failed to add product");
-
+            // ✅ Fetch latest products after adding
             fetchProducts();
+            const addedProduct = await res.json();
+            setProducts((prev) => [...prev, addedProduct]);
             setNewProduct({ name: "", price: "", image: "" });
             setImageFile(null);
         } catch (error) {
@@ -77,14 +79,13 @@ export default function AdminDashboard() {
         }
     };
 
-
     const handleDeleteProduct = async (id, imagePath) => {
         try {
             console.log("Deleting product with ID:", id);
             console.log("Original image path:", imagePath);
 
             // Ensure correct image path format
-            const formattedPath = imagePath.startsWith("/tmp/") ? imagePath.replace("/tmp/", "") : imagePath;
+            const formattedPath = imagePath.startsWith("/img/") ? imagePath.replace("/img/", "") : imagePath;
             console.log("Formatted path for deletion:", formattedPath);
 
             // Delete product from API
@@ -112,7 +113,7 @@ export default function AdminDashboard() {
     return (
         <div className="dashboard-container">
             <header className="header">
-                <h2> 🌿 ChandanaVana Nursery Dashboard</h2>
+                <h2>🔧 Admin Dashboard</h2>
                 <button className="logout-btn" onClick={() => { localStorage.removeItem("isAdmin"); router.push("/admin/login"); }}>Logout</button>
             </header>
 
@@ -129,7 +130,7 @@ export default function AdminDashboard() {
                 <h3>Existing Products</h3>
                 <div className="product-list">
                     {products.map((product) => {
-                        const imagePath = `/tmp/${product.name}-${product.price}.jpg`;
+                        const imagePath = `/img/${product.name}-${product.price}.jpg`;
 
                         return (
                             <div key={`${product.name}-${product.price}`} className="product-card">
@@ -138,10 +139,10 @@ export default function AdminDashboard() {
                                     alt={product.name}
                                     className="product-img"
                                 />
-                                <p>{product.name} - ₹{product.price}</p>
+                                <p>{product.name} - ${product.price}</p>
                                 <button
                                     className="delete-btn"
-                                    onClick={() => handleDeleteProduct(product.id, `tmp/${product.name}-${product.price}.jpg`)}
+                                    onClick={() => handleDeleteProduct(product.id, `img/${product.name}-${product.price}.jpg`)}
                                 >
                                     ❌ Delete
                                 </button>
@@ -165,7 +166,7 @@ export default function AdminDashboard() {
 }
 .header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: #136f19;
     padding: 15px 20px;

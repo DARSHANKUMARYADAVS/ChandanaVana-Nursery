@@ -3,7 +3,7 @@ import path from "path";
 
 export default function handler(req, res) {
     try {
-        const imagesDir = path.join(process.cwd(), "public/tmp");
+        const imagesDir = path.join(process.cwd(), "public/img");
 
         // Ensure the directory exists
         if (!fs.existsSync(imagesDir)) {
@@ -19,7 +19,7 @@ export default function handler(req, res) {
             .map(file => {
                 const [name, priceWithExt] = file.split("-");
                 const price = priceWithExt.split(".")[0]; // Remove file extension
-                return { name, price: parseFloat(price), imageUrl: `/tmp/${file}` };
+                return { name, price: parseFloat(price), imageUrl: `/img/${file}` };
             });
 
         return res.status(200).json(products);

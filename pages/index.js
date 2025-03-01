@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 
 export async function getStaticProps() {
-  const imgDirectory = path.join(process.cwd(), "public/tmp");
+  const imgDirectory = path.join(process.cwd(), "public/img");
   const files = fs.readdirSync(imgDirectory);
 
   const products = files
@@ -22,7 +22,7 @@ export async function getStaticProps() {
         id: index + 1,
         name: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize first letter
         price: parseInt(price, 10), // Convert price to number
-        image: `/tmp/${file}`, // Public image path
+        image: `/img/${file}`, // Public image path
       };
     });
 
